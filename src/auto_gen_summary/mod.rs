@@ -156,7 +156,7 @@ fn gen_summary_lines(root_dir: &str, group: &MdGroup, use_first_line_as_link_tex
 
         buff_link = format!("{}* [{}]({})", buff_spaces, name, README_FILE);
     } else {
-        buff_link = format!("{}* [{}]({}/{})", buff_spaces, name, path, README_FILE);
+        buff_link = format!("{}* [{}]({}/{})", buff_spaces, name, path.split("/").map(urlencoding::encode).collect::<Vec<_>>().join("/"), README_FILE);
     }
 
     if buff_spaces.len() == 0 {
@@ -182,9 +182,9 @@ fn gen_summary_lines(root_dir: &str, group: &MdGroup, use_first_line_as_link_tex
 
         let buff_link: String;
         if use_first_line_as_link_text && md.title.len() > 0 {
-            buff_link = format!("{}* [{}]({})", buff_spaces, md.title, path);
+            buff_link = format!("{}* [{}]({})", buff_spaces, md.title, path.split("/").map(urlencoding::encode).collect::<Vec<_>>().join("/"));
         } else {
-            buff_link = format!("{}* [{}]({})", buff_spaces, md.name, path);
+            buff_link = format!("{}* [{}]({})", buff_spaces, md.name, path.split("/").map(urlencoding::encode).collect::<Vec<_>>().join("/"));
         }
 
         lines.push(buff_link);
